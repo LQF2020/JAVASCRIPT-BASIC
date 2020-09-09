@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ParentNode</title>
+</head>
+
+<script>
+    window.onload = function () {
+        var aA = document.getElementsByTagName('a');
+        for(let i=0;i<aA.length;i++){
+            aA[i].onclick = function(){
+            aA[i].parentNode.style.display='none';
+        }
+    }
+    }
+
+</script>
+<body>
+
+<ul id="ull">
+        <li>11111<a href="javascript:;">隐藏</a> </li>
+        <li>22222<a href="javascript:;">隐藏</a></li>
+        <li>33333<a href="javascript:;">隐藏</a></li>
+        <li>44444<a href="javascript:;">隐藏</a></li>
+        <li>55555<a href="javascript:;">隐藏</a></li>
+</ul>
+
+</body>
+</html>

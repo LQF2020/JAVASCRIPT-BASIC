@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Title</title>
+		<script>
+			window.onload = function () {
+				var btn_start = document.getElementById("btn_start");
+				var btn_stop = document.getElementById("btn_stop");
+				var timer = null;
+				//两种写法
+
+				// 第一种写法，外部定义函数，但调用函数时不可以加括号
+				// var trigger_func = function(){
+				//     alert('i am a tiger');
+				// }
+				// btn_start.onclick = function () {
+				//     timer = setInterval(trigger_func,1000);
+				// }
+
+				//第二种写法，直接把函数写在timer里面
+				btn_start.onclick = function () {
+					//清除原有计时器，避免计时器累加
+					clearInterval(timer);
+
+					timer = setTimeout(function () {
+						alert("i am a tiger");
+					}, 2000);
+				};
+				//清除指定计时器
+				btn_stop.onclick = function () {
+					clearInterval(timer);
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<input id="btn_start" type="button" value="Start" />
+		<input id="btn_stop" type="button" value="Stop" />
+	</body>
+</html>

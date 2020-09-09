@@ -1,0 +1,40 @@
+<html>
+<head>
+<script type="text/javascript">
+
+
+    window.onload = function(){
+        var content_get = document.getElementById('tr1');
+        var btn_get = document.getElementById('btn_get');
+        var btn_change = document.getElementById('btn_change');
+        btn_get.onclick = function(){
+            alert(content_get.innerHTML);
+        }
+
+        btn_change.onclick = function(){
+            content_get.innerHTML = '<th>Given Name</th>\n' +
+          '<th>Surname</th>';
+        }
+    }
+
+</script>
+</head>
+<body>
+
+<table border="1">
+<tr id="tr1">
+<th>Firstname</th>
+<th>Lastname</th>
+</tr>
+<tr id="tr2">
+<td>Peter</td>
+<td>Griffin</td>
+</tr>
+</table>
+<br />
+<input id='btn_get' type="button" value="Alert innerHTML of table row" />
+<br />
+<input id='btn_change' type="button" value="change innerHTML of table row" />
+
+</body>
+</html>

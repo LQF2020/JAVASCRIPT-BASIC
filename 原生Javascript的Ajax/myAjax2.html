@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的Ajax程序</title>
+    <script src="ajax.js"></script>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementById('btn');
+
+            // 用法 Ajax(url,successFunc,failedFunc)
+            btn.onclick = function(){
+                Ajax('a.txt',
+                    function(message){
+                        alert(message);
+                    },
+                    function(){
+                        alert('failed');
+                    });
+            }
+        }
+    </script>
+
+</head>
+<body>
+<input id="btn" type="button" value="GET">
+</body>
+</html>

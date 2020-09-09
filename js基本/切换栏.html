@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            width:230px;
+            height: 230px;
+            border-color: aquamarine;
+            border-style: solid;
+            border-width: 5px;
+            display: none;
+        }
+
+        .btn_style{
+            background-color: bisque;
+        }
+        </style>
+
+
+    <script>
+        var btn_group;
+        var area_group;
+        window.onload = function(){
+            btn_group = document.getElementsByTagName('input');
+            area_group = document.getElementsByTagName('div');
+            for(let i=0; i<btn_group.length;i++){
+                btn_group[i].onclick = function(){
+                    //隐藏所有栏目
+                    for(let i=0;i<btn_group.length;i++){
+                        btn_group[i].className = '';
+                        area_group[i].style.display = 'none';
+                    }
+                    //开启指定栏目
+                    btn_group[i].className = 'btn_style';
+                    area_group[i].style.display = 'block';
+                }
+            }
+
+
+        }
+
+    </script>
+</head>
+<body>
+
+<input  type="button" value="btn1">
+<input  type="button" value="btn2">
+<input  type="button" value="btn3">
+<input  type="button" value="btn4">
+<div style ="display:block">111</div>
+<div>222</div>
+<div>333</div>
+<div>444</div>
+
+
+</body>
+</html>

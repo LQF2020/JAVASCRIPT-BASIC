@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            #div1{
+                width:50px;
+                height: 50px;
+                background: red;
+            }
+        </style>
+
+        <script>
+       var color_green = 0;
+       var obj;
+       // window.onload：
+       // 当一个文档完全下载到浏览器中时，才会触发window.onload事件
+       // 这意味着页面上的全部元素对js而言都是可以操作的，也就是说页面上的所有元素加载完毕才会执行。
+       // 这种情况对编写功能性代码非常有利，因为无需考虑加载的次序。
+ 
+
+       window.onload = function () {
+         // console.log(obj.style.background);
+          obj = document.getElementById('div1');
+       }
+       function changeColor() {
+           if (color_green == 0) {
+                 obj.style.background = 'green';
+                 color_green = 1;
+           } else if (color_green == 1) {
+                 obj.style.background = 'red';
+                 color_green = 0;
+           }
+       }
+
+        </script>
+
+    </head>
+
+    <body>
+        <div id='div1' onclick="changeColor()"></div>
+
+
+
+
+    </body>
+
+
+
+</html>

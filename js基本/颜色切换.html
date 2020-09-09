@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			#square {
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+		</style>
+		<script>
+			function changeColor(color) {
+				var obj = document.getElementById("square");
+				obj.style.background = color;
+			}
+		</script>
+	</head>
+	<body>
+		<hr />
+		<input type="button" onclick="changeColor('red')" value="Red" />
+		<input type="button" onclick="changeColor('green')" value="Green" />
+		<input type="button" onclick="changeColor('black')" value="Black" />
+		<hr />
+		<div id="square"></div>
+	</body>
+</html>

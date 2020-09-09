@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>键盘控制物件移动</title>
+		<style>
+			div {
+				width: 100px;
+				height: 100px;
+				background: black;
+				position: absolute;
+			}
+		</style>
+
+		<script>
+			function getPosition(ev) {
+				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+				return { x: ev.clientX + scrollLeft, y: ev.clientY + scrollTop };
+			}
+			window.onload = function () {
+				var div1 = document.getElementById("div1");
+				document.onmousemove = function (ev) {
+					var oEvent = ev || event;
+					var pos = getPosition(oEvent);
+					console.log(div1);
+					div1.style.left = pos.x - div1.offsetWidth / 2 + "px";
+					div1.style.top = pos.y - div1.offsetHeight / 2 + "px";
+				};
+
+				document.onkeydown = function (ev) {
+					var oEvent = ev || event;
+					var key = oEvent.key.toUpperCase();
+					// alert(oEvent.key);
+					if (key == "A") {
+						div1.style.left = div1.offsetLeft - 5 + "px";
+					}
+					if (key == "D") {
+						div1.style.left = div1.offsetLeft + 5 + "px";
+					}
+					if (key == "W") {
+						div1.style.top = div1.offsetTop - 5 + "px";
+					}
+					if (key == "S") {
+						div1.style.top = div1.offsetTop + 5 + "px";
+					}
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div id="div1"></div>
+	</body>
+</html>

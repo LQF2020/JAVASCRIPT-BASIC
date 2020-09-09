@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js闭包测试2</title>
+    <style>
+        #div1{
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            background-color: #fff;
+        }
+        #div2{
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            background-color: #fff;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var counter = function(){
+                var click = 0;
+                return{
+                    decrement:function(){
+                        click-=1
+                    },
+                    increment: function(){
+                        click+=1;
+                    },
+                    returntimes:function () {
+                        return click;
+                    }
+                }
+            }
+            // var square1 = document.getElementById('div1');
+            // var square2 = document.getElementById('div2');
+
+            var aSquare = document.getElementsByTagName('div');
+            var aBtn = document.getElementsByTagName('input');
+            // var btn1 = document.getElementById('btn1');
+            // var btn2 = document.getElementById('btn2');
+            // var counter1 = counter();
+            // var counter2 = counter();
+
+            for(let i = 0 ;i<aSquare.length; i++){
+                aSquare[i].counter = counter();
+                aSquare[i].onclick = function () {
+                   this.counter.increment();
+                   var counts = this.counter.returntimes();
+                   aBtn[i].value = '区域被点击了'+ counts + '次';
+                }
+            }
+            // square1.onclick = function(){
+            //     counter1.increment();
+            //     var counts = counter1.returntimes();
+            //     btn1.value = '区域被点击了'+ counts + '次';
+            // };
+            //   square2.onclick = function(){
+            //     counter2.increment();
+            //     var counts = counter2.returntimes();
+            //     btn2.value = '区域被点击了'+ counts + '次';
+            // };
+        }
+
+    </script>
+</head>
+<body>
+<div id="div1">div1</div>
+<input id="btn1" type="button" value="区域被点击了0次">
+<div id="div2">div2</div>
+<input id="btn2" type="button" value="区域被点击了0次">
+</body>
+</html>

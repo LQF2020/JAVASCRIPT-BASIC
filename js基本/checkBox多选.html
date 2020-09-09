@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>checkbox</title>
+    <script>
+        var check_area;
+        var check_boxs ;
+        var check_result;
+        var result_text;
+        window.onload = function(){
+           check_area = document.getElementById('section_checkbox');
+           check_boxs = check_area.getElementsByTagName('input');
+           check_result = document.getElementById('check_result')
+            result_text = document.getElementById('check_result');
+        };
+        function checkresult(){
+            var count = 0;
+            for(let i=0;i<check_boxs.length;i++){
+                if(check_boxs[i].checked==true){
+                    count++;
+                }
+            }
+            let result = document.getElementById('check_result');
+            result.innerText = String(count);
+        }
+        function checkAll(){
+            for(let i=0;i<check_boxs.length;i++){
+                check_boxs[i].checked = true;
+            }
+
+        }
+
+          function cancelchecks(){
+            for(let i=0;i<check_boxs.length;i++){
+                check_boxs[i].checked= false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id = 'section_checkbox'>
+        <input type="checkbox"/><br>
+        <input type="checkbox"/><br>
+        <input type="checkbox"/><br>
+        <input type="checkbox"/><br>
+        <input type="checkbox"/><br>
+    </div>
+    <input type="button" value="check all" onclick="checkAll()">
+    <input type="button" value="cancel" onclick="cancelchecks()">
+    <input type="button" value="result" onclick="checkresult()">
+    <br>
+    The number of checked : <span id="check_result" ></span>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>insertBefore</title>
+     <script>
+        window.onload = function(){
+            var ul = document.getElementById('ull');
+            var aLi = ul.getElementsByTagName('li');
+            var text_area = document.getElementById('tx');
+            var btn = document.getElementById('btn');
+            var new_li;
+
+            btn.onclick = function() {
+                var this_text = text_area.value;
+                new_li = document.createElement('li');
+                var index = aLi.length;
+                new_li.innerHTML = this_text + " <a id='del_"+index+"' href=\"#\">Del</a>";
+                
+                
+                if (index == 0) {
+                    ul.appendChild(new_li);
+                } else {
+                    ul.insertBefore(new_li, aLi[0]);
+                }
+                var del = document.getElementById('del_' + index);
+                del.onclick = function () {
+                    ul.removeChild(this.parentNode);
+                }
+            }
+
+
+        }
+    </script>
+</head>
+<body>
+<input id='tx' type="text">
+<input id="btn" type="button" value="submit">
+<ul id="ull"></ul>
+</body>
+</html>

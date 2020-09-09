@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>缓冲运动模型</title>
+    <style>
+        #model{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 700px;
+            top: 50px;
+        }
+        #line{
+            width: 1px;
+            height: 150px;
+            background: black;
+            top: 0;
+            left: 300px;
+            position: absolute;
+        }
+    </style>
+
+    <script>
+
+        function startMove(){
+            var obj= document.getElementById('model');
+            setInterval(function(){
+                var speed = (300-obj.offsetLeft)/10;
+                speed = speed>0?Math.ceil(speed):Math.floor(speed);
+                obj.style.left = obj.offsetLeft+speed+'px';
+            },30);
+        }
+        window.onload = function () {
+            var btn = document.getElementById('btn');
+            btn.onclick = function(){
+                startMove();
+            };
+
+        }
+
+    </script>
+</head>
+<body>
+<div id="model"></div>
+<div id="line"></div>
+<input id="btn" type="button" value="start">
+</body>
+</html>

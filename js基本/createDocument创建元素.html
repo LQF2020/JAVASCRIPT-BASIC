@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CreateDocument</title>
+
+    <script>
+        window.onload = function(){
+            var ul = document.getElementById('ull');
+            var text_area = document.getElementById('tx');
+            var btn = document.getElementById('btn');
+            btn.onclick = function(){
+                var this_text = text_area.value;
+                var new_li = document.createElement('li');
+                new_li.innerHTML = this_text;
+                ul.appendChild(new_li);
+            }
+        }
+    </script>
+</head>
+<body>
+
+<input id='tx' type="text">
+<input id="btn" type="button" value="submit">
+<ul id="ull"></ul>
+</body>
+</html>

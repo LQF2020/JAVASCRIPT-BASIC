@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>按钮冒泡事件</title>
+    <style>
+        div{
+            width: 300px;
+            height: 300px;
+            display: none;
+            border: 1px dotted black;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementById('button');
+            var box = document.getElementById('div1');
+            btn.onclick = function(ev){
+                box.style.display = 'block';
+                //获取event事件对象，兼容性写法，IE,FIREFOX, Chrome
+                var oEvent = ev || event;
+                   //消除事件冒泡属性
+                //若不消除，按钮事件会由下（当前物件）往上（整个document）传递，可能导致函数异常失效
+                oEvent.cancelBubble = true;
+            }
+            document.onclick = function(){
+                box.style.display = 'none';
+
+            }
+        }
+    </script>
+</head>
+<body>
+<input id="button" type="button" value="submit">
+<div id="div1"></div>
+</body>
+</html>

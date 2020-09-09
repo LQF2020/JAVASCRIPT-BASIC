@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #link{
+            width: 200px;
+            height: 300px;
+            background: bisque;
+            position: absolute;
+            top: 50px;
+            left: -200px;
+
+        }
+        #link span{
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background: aquamarine;
+            top: 100px;
+            left: 185px;
+        }
+    </style>
+
+    <script>
+
+        //获取指定物体的样式，包含行间样式和非行间样式
+       function getStyle(obj,name){
+           if(obj.currentStyle){
+               return obj.currentStyle.name;
+           }else{
+               return getComputedStyle(obj,null)[name];
+           }
+       }
+        window.onload = function(){
+            var link = document.getElementById('link');
+            var timer = null;
+            function move(target) {
+                clearInterval(timer);
+                var value;
+                if(parseInt(getStyle(link,'left'))<target){
+                    value = 10;
+                }else{
+                    value = -10;
+                }
+                timer = setInterval(function () {
+                    if (parseInt(getStyle(link,'left')) == target) {
+                        clearInterval(timer);
+                    } else {
+                        link.style.left = parseInt(getStyle(link,'left')) + value + 'px';
+                    }
+
+                }, 20);
+            }
+
+            link.onmouseover = function () {
+                move(0);
+            };
+            link.onmouseout = function () {
+                move(-200);
+            };
+        }
+    </script>
+</head>
+<body>
+<div id="link">
+    <span id="touch"></span>
+</div>
+
+
+</body>
+</html>

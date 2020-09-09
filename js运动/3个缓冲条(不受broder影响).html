@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三个缓冲条</title>
+    <style>
+        div{
+            width: 100px;
+            height: 50px;
+            background: lightgreen;
+            border: 3px solid black;
+            left: 0;
+            margin: 10px;
+        }
+    </style>
+
+    <script>
+
+       window.onload=function () {
+           var aDiv = document.getElementsByTagName('div');
+           for(let i=0;i<aDiv.length;i++){
+               aDiv[i].timer = null;
+               aDiv[i].onmouseover = function(){
+                   startMove(aDiv[i],500);
+               };
+               aDiv[i].onmouseout = function(){
+                   startMove(aDiv[i],100);
+               };
+           }
+       }
+
+       //获取指定物体的样式，包含行间样式和非行间样式
+       function getStyle(obj,name){
+           if(obj.currentStyle){
+               return obj.currentStyle.name;
+           }else{
+               return getComputedStyle(obj,null)[name];
+           }
+       }
+       //由于多物体运动，因此为每个物体设置定时器属性，用以独立控制单个物体的运动快慢
+        function startMove(obj,target){
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function(){
+                if(getStyle(obj,"width") == target){
+                    clearInterval(obj.timer);
+                }else{
+                     var speed = (target-parseInt(getStyle(obj,"width")))/10;
+                     speed = speed>0?Math.ceil(speed):Math.floor(speed);
+                     obj.style.width = parseInt(getStyle(obj,"width"))+speed+'px';
+                }
+
+            },30);
+
+        }
+    </script>
+
+</head>
+
+<body>
+
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+
+</body>
+</html>

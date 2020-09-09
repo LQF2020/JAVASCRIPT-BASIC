@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            #div1{
+                width:50px;
+                height: 50px;
+                background-color: red;
+            }
+        </style>
+        <script>
+            function toGreen(){
+                var square = document.getElementById('div1');
+                square.style.height = '100px';
+                square.style.width = '100px';
+                square.style.background =  'green';
+            }
+
+            function toRed(){
+                var square = document.getElementById('div1');
+                square.style.height = '50px';
+                square.style.width = '50px';
+                square.style.background =  'red';
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id='div1' onmouseover="toGreen()" onmouseout="toRed()"></div>
+
+    </body>
+
+
+</html>

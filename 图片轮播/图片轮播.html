@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>滑动图片</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#_div {
+				width: 963px;
+				height: 279px;
+
+				position: absolute;
+				top: 40%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				overflow: hidden;
+				border: 3px solid gold;
+			}
+			#_div ul {
+				position: absolute;
+				left: 0;
+				top: 0;
+				/*width:200%;*/
+				height: 279px;
+			}
+			#_div ul li {
+				width: 321px;
+				line-height: 279px;
+				height: 279px;
+
+				float: left;
+				list-style: none;
+			}
+			#_div ul li img {
+				display: inline-block;
+				vertical-align: middle;
+				width: 80%;
+				height: auto;
+			}
+			#btn_div {
+				position: absolute;
+				top: calc(40% + 300px);
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+			.button {
+				background-color: #4caf50; /* Green */
+				border: none;
+				color: white;
+				padding: 16px 32px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 16px;
+				margin: 4px 2px;
+				-webkit-transition-duration: 0.4s; /* Safari */
+				transition-duration: 0.4s;
+				cursor: pointer;
+			}
+			.button1 {
+				background-color: white;
+				color: black;
+				border: 2px solid #4caf50;
+			}
+
+			.button1:hover {
+				background-color: #4caf50;
+				color: white;
+			}
+		</style>
+
+		<script>
+			window.onload = function () {
+				var value = 0;
+				var oDiv = document.getElementById("_div");
+				var oUl = oDiv.getElementsByTagName("ul")[0];
+				var oLi = oUl.getElementsByTagName("li");
+
+				var btn_left = document.getElementById("btn_left");
+				var btn_right = document.getElementById("btn_right");
+				btn_left.onclick = function () {
+					value = -5;
+				};
+				btn_right.onclick = function () {
+					value = 5;
+				};
+
+				oUl.innerHTML = oUl.innerHTML + oUl.innerHTML;
+				oUl.style.width = oLi[0].offsetWidth * oLi.length + "px";
+
+				setInterval(function () {
+					if (oUl.offsetLeft < -oUl.offsetWidth / 2) {
+						oUl.style.left = "0";
+					}
+					if (oUl.offsetLeft > 0) {
+						oUl.style.left = -oUl.offsetWidth / 2 + "px";
+					}
+					oUl.style.left = oUl.offsetLeft + value + "px";
+				}, 30);
+			};
+		</script>
+	</head>
+	<body>
+		<div id="_div">
+			<ul>
+				<li><img src="image/roll_img1.png" /></li>
+				<li><img src="image/roll_img2.png" /></li>
+				<li><img src="image/roll_img3.png" /></li>
+				<li><img src="image/roll_img4.png" /></li>
+			</ul>
+		</div>
+		<div id="btn_div">
+			<input class="button button1" id="btn_left" type="button" value="left" />
+			<input class="button button1" id="btn_right" type="button" value="right" />
+		</div>
+	</body>
+</html>

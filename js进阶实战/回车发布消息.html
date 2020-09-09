@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回车发布消息框</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        textarea{
+            margin: 20px;
+            top: 30px;
+            left: 30px;
+        }
+        ul{
+            border: 1px solid black;
+            width: 300px;
+            height: 500px;
+            margin: 10px auto;
+            overflow: hidden;
+        }
+        ul li{
+            border-bottom: 1px dashed bisque;
+            padding: 4px;
+            list-style: none;
+            filter : alpha(opacity=0);
+            opacity: 0;
+            overflow: hidden;
+        }
+    </style>
+    <script src="../js运动/move_Framework.js"></script>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementById('btn');
+            var tx= document.getElementById('text');
+            var box = document.getElementById('box');
+            var new_message = null;
+            var iHeight = 0;
+
+            function post_message(){
+                new_message = document.createElement('li');
+                if(tx.value){
+                    new_message.innerHTML = tx.value;
+                    tx.value = '';
+                    if(box.children.length==0){
+                        box.appendChild(new_message);
+                    }else{
+                         box.insertBefore(new_message,box.children[0]);
+                    }
+                    iHeight = new_message.offsetHeight;
+                    new_message.style.height = "0";
+                    startMove(new_message,{'height':iHeight},function () {
+                        startMove(new_message,{opacity:100},null);
+                    });
+                }
+            }
+            btn.onclick = function(){
+                post_message();
+            }
+
+            document.onkeydown = function(ev){
+                var oEvent = ev || event;
+                if(oEvent.key=='Enter' && oEvent.ctrlKey){
+                    new_message = document.createElement('li');
+                        post_message();
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<textarea id="text" rows="4" cols="30"></textarea>
+<input id="btn" type="button" value="submit">
+    <ul id="box">
+    </ul>
+</body>
+</html>

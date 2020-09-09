@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标拖拽物体移动</title>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            background: coral;
+            position: absolute;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var oDiv = document.getElementById('div1');
+            var disX = 0;
+            var disY = 0;
+            oDiv.onmousedown = function(ev){
+                var oEvent = ev||event;
+                disX = oEvent.clientX - oDiv.offsetLeft;
+                disY = oEvent.clientY - oDiv.offsetTop;
+
+                // 使用document的onmousemove属性是为了
+                //防止鼠标滑动过快跳出物体区域，从而导致物体无法移动
+                // document面向的是整个页面，就算鼠标跳出物体区域，仍然可以控制物体
+                document.onmousemove= function(ev){
+                    var oEvent = ev||event;
+                    oDiv.style.left =  (oEvent.clientX-disX)+'px';
+                    oDiv.style.top = (oEvent.clientY - disY) +'px';
+
+                    if(oEvent.clientX-disX<0){
+                        //防止滑出左边区
+                        oDiv.style.left = 0;
+                    }else if(oEvent.clientX-disX>document.documentElement.clientWidth-oDiv.offsetWidth){
+                        //防止滑出右边区
+                        // document.documentElement.clientWidth为用户可视区域宽度
+                        oDiv.style.left = document.documentElement.clientWidth-oDiv.offsetWidth +'px';
+                    }
+                    if(oEvent.clientY - disY <0){
+                        //防止滑出上边区
+                        oDiv.style.top = 0;
+                    }else if(oEvent.clientY-disY>document.documentElement.clientHeight-oDiv.offsetHeight){
+                        //防止滑出下边区
+                         oDiv.style.top = document.documentElement.clientHeight-oDiv.offsetHeight+'px';
+                    }
+                }
+                document.onmouseup = function () {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+                return false;
+            }
+        }
+    </script>
+</head>
+<body >
+<div id="div1"></div>
+</body>
+</html>

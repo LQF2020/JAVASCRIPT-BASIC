@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            #target{
+                width:50px;
+                height: 50px;
+                background: red;
+            }
+            #div1{
+                width:50px;
+                height: 50px;
+                background: red;
+            }
+
+            #div2{
+                width:100px;
+                height: 100px;
+                background: green;
+            }
+        </style>
+
+
+    </head>
+
+    <body>
+        <div id='target' onclick="changeCSS()"></div>
+
+
+        <script>
+
+           var obj = document.getElementById('target');
+           var changeCss = 0;
+           function changeCSS(){
+
+               if(changeCss == 0){
+                   obj.setAttribute('id','div2');
+                  changeCss = 1;
+               }else if(changeCss == 1){
+                  obj.setAttribute('id','div1');
+                  changeCss = 0;
+               }
+           }
+        </script>
+
+    </body>
+
+
+
+</html>
