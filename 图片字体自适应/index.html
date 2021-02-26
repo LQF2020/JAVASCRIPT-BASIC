@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Responsive fontsize</title>
+        <style>
+            body {
+                position: relative;
+            }
+            @keyframes enlarge {
+                0% {
+                    opacity: 0;
+                    height: 0;
+                }
+                100% {
+                    opacity: 1;
+                    height: 15%;
+                }
+            }
+            @keyframes fade-in {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            .img-wrapper {
+                overflow: hidden;
+                margin: 0 auto;
+                margin-top: 100px;
+                width: 500px;
+                max-width: 90%;
+                position: relative;
+            }
+            .img-wrapper img {
+                width: 100%;
+            }
+            .img-wrapper .featured-point {
+                animation: enlarge 1s ease-in-out forwards;
+                position: absolute;
+                width: 20%;
+                border-left: 1px solid white;
+                background-color: inherit;
+                transform: translateY(-100%);
+            }
+            .featured-point span {
+                color: white;
+                opacity: 0;
+                animation: fade-in 1s ease-in-out 1s 1 forwards;
+                width: 100%;
+                font-size: 1em;
+                position: absolute;
+                transform: translateY(-100%);
+            }
+            .featured-point::after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 0.3em;
+                height: 0.3em;
+                border-radius: 50%;
+                border: 2px solid white;
+                background-color: black;
+                transform: translateX(-51%);
+            }
+            #featured_text {
+                text-align: center;
+                margin: 32px auto;
+            }
+            #featured_text span {
+                color: orangered;
+            }
+            #featured_text_input_wrapper {
+                margin: 32px auto;
+                width: 100%;
+                max-width: 50%;
+                display: flex;
+            }
+            #featured_text_input_wrapper input {
+                padding-left: 12px;
+                width: 90%;
+                height: 32px;
+            }
+            #featured_text_input_wrapper button {
+                width: 10%;
+                height: 38px;
+            }
+            #btn-generate {
+                display: block;
+                margin: 16px auto;
+            }
+            .code-wrapper-overlay {
+                display: none;
+                background-color: rgba(0, 0, 0, 0.6);
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .code-wrapper {
+                padding: 15px;
+                overflow: auto;
+                display: none;
+                z-index: 1000;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 1px solid black;
+                position: fixed;
+                width: 800px;
+                max-width: 100%;
+                height: 600px;
+                background-color: white;
+            }
+            .code-wrapper .header {
+                text-align: center;
+                background-color: black;
+                color: white;
+                border-bottom: 1px solid black;
+            }
+            .code-wrapper .content {
+                padding: 8px;
+            }
+            .html-wrapper,
+            .css-wrapper,
+            .js-wrapper {
+                overflow-y: auto;
+                width: 50%;
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="img-wrapper">
+            <img src="./image/black_superhero.jpg" />
+        </div>
+        <div id="featured_text">Featured text: <span></span></div>
+        <div id="featured_text_input_wrapper">
+            <input
+                type="text"
+                placeholder="Please enter your text."
+                id="featured_text_input"
+            /><button id="btn-create-featured-text">create</button>
+        </div>
+        <button id="btn-generate">generate code</button>
+        <div class="code-wrapper-overlay"></div>
+        <div class="code-wrapper">
+            <div class="html-wrapper">
+                <div class="header">html</div>
+                <div class="content"></div>
+            </div>
+            <div class="css-wrapper">
+                <div class="header" contenteditable>css</div>
+                <div class="content" contenteditable></div>
+            </div>
+            <div class="js-wrapper">
+                <div class="header" contenteditable>js</div>
+                <div class="content" contenteditable></div>
+            </div>
+        </div>
+
+        <script>
+            function updateFontSize($img_wrapper) {
+                document
+                    .querySelectorAll(".featured-point")
+                    .forEach(function (node) {
+                        node.style.fontSize =
+                            ($img_wrapper.offsetWidth / 750) * 28 + "px";
+                    });
+            }
+            window.addEventListener("resize", function () {
+                const $img_wrapper = document.querySelector(".img-wrapper");
+                updateFontSize($img_wrapper);
+            });
+
+            function addPoint(config) {
+                const { left, top, text } = config;
+                const $img_wrapper = document.querySelector(".img-wrapper");
+                const featuredPoint = document.createElement("div");
+                featuredPoint.className = "featured-point";
+                featuredPoint.style.left = left;
+                featuredPoint.style.top = top;
+                featuredPoint.innerHTML = `<span>${text}</span>`;
+                $img_wrapper.appendChild(featuredPoint);
+                updateFontSize($img_wrapper);
+            }
+
+            function getPointPos(event) {
+                const $img_wrapper = document.querySelector(".img-wrapper");
+                const $img_wrapper_pos = {
+                    top: $img_wrapper.offsetTop,
+                    left: $img_wrapper.offsetLeft,
+                };
+                const e = event || window.event;
+                const $mouse_pos = {
+                    left: e.clientX,
+                    top: e.clientY,
+                };
+                const $relative_pos = {
+                    left: $mouse_pos.left - $img_wrapper_pos.left,
+                    top: $mouse_pos.top - $img_wrapper_pos.top,
+                };
+                const $inner_img = document.querySelector(".img-wrapper img");
+                const $inner_img_size = {
+                    width: $inner_img.offsetWidth,
+                    height: $inner_img.offsetHeight,
+                };
+                const pointPosInPercentage = {
+                    left:
+                        (
+                            (100 * $relative_pos.left) /
+                            $inner_img_size.width
+                        ).toFixed(2) + "%",
+                    top:
+                        (
+                            (100 * $relative_pos.top) / $inner_img_size.height -
+                            15.5
+                        ).toFixed(2) + "%",
+                };
+                return pointPosInPercentage;
+            }
+
+            const $img_wrapper = document.querySelector(".img-wrapper");
+            const $btn_create_featured_text = document.getElementById(
+                "btn-create-featured-text"
+            );
+            $btn_create_featured_text.addEventListener("click", function () {
+                const featuredText = document.getElementById(
+                    "featured_text_input"
+                ).value;
+                if (featuredText.length == 0) {
+                    alert("Please provide your featured text.");
+                    return false;
+                } else {
+                    document.querySelector(
+                        "#featured_text span"
+                    ).innerText = featuredText;
+                }
+            });
+            $img_wrapper.addEventListener("click", function () {
+                const featuredText = document.querySelector(
+                    "#featured_text span"
+                ).innerText;
+                if (featuredText.length == 0) {
+                    alert("Please provide your featured text.");
+                    return false;
+                } else {
+                    addPoint({ ...getPointPos(), text: featuredText });
+                }
+            });
+            document
+                .querySelector(".code-wrapper-overlay")
+                .addEventListener("click", function () {
+                    document.querySelector(
+                        ".code-wrapper-overlay"
+                    ).style.display = "none";
+                    document.querySelector(".code-wrapper").style.display =
+                        "none";
+                });
+            function getHtmlCode() {
+                return document.querySelector(".img-wrapper").outerHTML;
+            }
+            function getJsCode() {
+                return ` function updateFontSize($img_wrapper) {
+                document
+                    .querySelectorAll(".featured-point")
+                    .forEach(function (node) {
+                        node.style.fontSize =
+                            ($img_wrapper.offsetWidth / 750) * 28 + "px";
+                    });
+            }
+            function dynamicChangeFontSize() {
+                const $img_wrapper = document.querySelector(".img-wrapper");
+                updateFontSize($img_wrapper);
+            }
+            dynamicChangeFontSize();
+            window.addEventListener("resize", function () {
+                dynamicChangeFontSize();
+            });`;
+            }
+            function getCssCode() {
+                return `@keyframes enlarge {
+                0% {
+                    opacity: 0;
+                    height: 0;
+                }
+                100% {
+                    opacity: 1;
+                    height: 15%;
+                }
+            }
+            @keyframes fade-in {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            .img-wrapper {
+                overflow: hidden;
+                margin: 0 auto;
+                margin-top: 100px;
+                width: 500px;
+                max-width: 90%;
+                position: relative;
+            }
+            .img-wrapper img {
+                width: 100%;
+            }
+            .img-wrapper .featured-point {
+                animation: enlarge 1s ease-in-out forwards;
+                position: absolute;
+                width: 20%;
+                border-left: 1px solid white;
+                background-color: inherit;
+                transform: translateY(-100%);
+            }
+            .featured-point span {
+                color: white;
+                opacity: 0;
+                animation: fade-in 1s ease-in-out 1s 1 forwards;
+                width: 100%;
+                font-size: 1em;
+                position: absolute;
+                transform: translateY(-100%);
+            }
+            .featured-point::after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 0.3em;
+                height: 0.3em;
+                border-radius: 50%;
+                border: 2px solid white;
+                background-color: black;
+                transform: translateX(-51%);
+            }`;
+            }
+            function generateCode() {
+                document.querySelector(
+                    ".code-wrapper .html-wrapper .content"
+                ).innerText = getHtmlCode();
+                document.querySelector(
+                    ".code-wrapper .css-wrapper .content"
+                ).innerText = getCssCode();
+                document.querySelector(
+                    ".code-wrapper .js-wrapper .content"
+                ).innerText = getJsCode();
+                document.querySelector(".code-wrapper-overlay").style.display =
+                    "block";
+                document.querySelector(".code-wrapper").style.display = "flex";
+            }
+            const $btn_generate_code = document.getElementById("btn-generate");
+            $btn_generate_code.addEventListener("click", function () {
+                generateCode();
+            });
+        </script>
+    </body>
+</html>
